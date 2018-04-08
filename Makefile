@@ -1,5 +1,5 @@
 
-name = "Pouya's Gouraud Shader"
+name = "Kary Shader"
 file = shader.cpp
 
 build: $(file)

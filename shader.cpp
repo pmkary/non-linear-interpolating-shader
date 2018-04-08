@@ -57,18 +57,6 @@
 //   │      │ C │                                                  └───┘       │
 //   │      └───┘                                                              │
 //   │                                                                         │
-//   │                                                                         │
-//   │                                                                         │
-//   │           AL           LC                      AR           RB          │
-//   │    L =  ────── * C + ────── * A         R =  ────── * B + ────── * A    │
-//   │           AC           AC                      AB           AB          │
-//   │                                                                         │
-//   │                                                                         │
-//   │                                                                         │
-//   │                             LS           RS                             │
-//   │                      S =  ────── * R + ────── * L                       │
-//   │                             LR           LR                             │
-//   │                                                                         │
 //   └─────────────────────────────────────────────────────────────────────────┘
 //
 
@@ -133,7 +121,7 @@
 
     // Lighting
     const struct RGBA A_Lighting =
-        { 0.6, 0.0, 1.0 };
+        { 1.0, 0.0, 1.0 };
     const struct RGBA C_Lighting =
         { 0.0, 0.0, 0.0 };
     const struct RGBA B_Lighting =
@@ -244,14 +232,23 @@
     }
 
 //
+// ─── GET PERCENTAGE BASED RATIO ─────────────────────────────────────────────────
+//
+
+    float get_percentage_based_ration ( float input ) {
+        return input * input * input;
+    }
+
+//
 // ─── COMPUTE SCAN LINE LIGHTS ───────────────────────────────────────────────────
 //
 
     RGBA get_RGBA_on_linear_interpolation ( Point position,
                                             Point up,
                                             Point down,
-                                            RGBA  up_color,
-                                            RGBA  down_color ) {
+                                             RGBA up_color,
+                                             RGBA down_color ) {
+
         const auto up_distance =
             vertex_length( up, position );
         const auto down_distance =
@@ -260,9 +257,9 @@
             vertex_length( up, down );
 
         const auto up_volume =
-            up_distance / up_down_size;
+            get_percentage_based_ration( up_distance / up_down_size );
         const auto down_volume =
-            down_distance / up_down_size;
+            get_percentage_based_ration( down_distance / up_down_size );
 
         const auto new_RGBA =
             combine_colors( up_color, up_volume, down_color, down_volume );
@@ -480,7 +477,7 @@
            glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB );
             glutInitWindowSize( screen_width, screen_height );
         glutInitWindowPosition( 100, 100);
-              glutCreateWindow( "Pouya's Basic Gouraud Interpolating Shader!" );
+              glutCreateWindow( "Kary Shader" );
                           init( );
                glutDisplayFunc( display );
                   glutMainLoop( );
