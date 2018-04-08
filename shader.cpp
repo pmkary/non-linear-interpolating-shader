@@ -121,7 +121,7 @@
 
     // Lighting
     const struct RGBA A_Lighting =
-        { 1.0, 0.0, 1.0 };
+        { 0.5, 0.0, 1.0 };
     const struct RGBA C_Lighting =
         { 0.0, 0.0, 0.0 };
     const struct RGBA B_Lighting =
@@ -137,7 +137,13 @@
     const auto cores =
         std::thread::hardware_concurrency( );
 
+//
+// ─── GLOBALS ────────────────────────────────────────────────────────────────────
+//
+
     RGBA ** screen_matrix;
+
+    float display_number;
 
 //
 // ─── INIT SCREEN MATRIX ─────────────────────────────────────────────────────────
@@ -236,7 +242,7 @@
 //
 
     float get_percentage_based_ration ( float input ) {
-        return input * input * input;
+        return abs( cos( sin( input ) * display_number ) );
     }
 
 //
@@ -447,10 +453,27 @@
     }
 
 //
+// ─── UPDATE DISPLAY NUMBER ──────────────────────────────────────────────────────
+//
+
+    void update_display_number ( ) {
+        if ( display_number < 100 ) {
+            display_number += 1;
+        } else if ( display_number < 1000 ) {
+            display_number += 20;
+        } else if ( display_number < 10000 ) {
+            display_number += 50;
+        } else {
+            display_number += 200;
+        }
+    }
+
+//
 // ─── DISPLAY VIEW ───────────────────────────────────────────────────────────────
 //
 
     void display ( ) {
+        update_display_number( );
         optimal_triangle_drawing_loop( );
         draw_screen_matrix( );
     }
@@ -460,6 +483,7 @@
 //
 
     inline void init ( ) {
+              display_number = 1.;
                glClearColor( 0.f, 0.f, 0.f, 0.f );
                     glClear( GL_COLOR_BUFFER_BIT );
            // glColor4f( 1.0, 1.0, 1.0, 1.0 );
@@ -480,6 +504,7 @@
               glutCreateWindow( "Kary Shader" );
                           init( );
                glutDisplayFunc( display );
+                  glutIdleFunc( display );
                   glutMainLoop( );
 
         return 0;
