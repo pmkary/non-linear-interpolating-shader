@@ -1,5 +1,5 @@
 
-name = "Kary Shader"
+name = "Kary's Shading Engine"
 file = shader.cpp
 
 build: $(file)
