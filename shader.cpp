@@ -101,9 +101,9 @@
     const struct Point A =
         { 400, 100 };
     const struct Point C =
-        { 200, 400 };
+        { 150, 400 };
     const struct Point B =
-        { 600, 400 };
+        { 650, 400 };
 
     // triangle edges
     const struct Line AC =
@@ -461,10 +461,8 @@
             display_number += 1;
         } else if ( display_number < 1000 ) {
             display_number += 20;
-        } else if ( display_number < 10000 ) {
-            display_number += 50;
         } else {
-            display_number += 200;
+            display_number += 50;
         }
     }
 
@@ -501,7 +499,7 @@
            glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB );
             glutInitWindowSize( screen_width, screen_height );
         glutInitWindowPosition( 100, 100);
-              glutCreateWindow( "Kary Shader" );
+              glutCreateWindow( "✣ Pouya's Strange Fractal ✣" );
                           init( );
                glutDisplayFunc( display );
                   glutIdleFunc( display );
