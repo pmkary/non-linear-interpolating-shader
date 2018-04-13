@@ -120,11 +120,11 @@
         { 0, 0 };
 
     // Lighting
-    const struct RGBA A_Lighting =
-        { 0.5, 0.0, 1.0 };
-    const struct RGBA C_Lighting =
+    struct RGBA A_Lighting =
+        { 0.6, 0.0, 0.6 };
+    struct RGBA C_Lighting =
         { 0.0, 0.0, 0.0 };
-    const struct RGBA B_Lighting =
+    struct RGBA B_Lighting =
         { 0.0, 0.0, 0.0 };
 
     const struct RGBA BLACK =
@@ -144,6 +144,18 @@
     RGBA ** screen_matrix;
 
     float display_number;
+
+//
+// ─── GET PERCENTAGE BASED RATIO ─────────────────────────────────────────────────
+//
+
+    inline float get_percentage_based_ration ( float input ) {
+
+        const auto sin_abs =
+            abs( sin( display_number ) );
+
+        return sin_abs - input * input;
+    }
 
 //
 // ─── INIT SCREEN MATRIX ─────────────────────────────────────────────────────────
@@ -237,13 +249,6 @@
         return result;
     }
 
-//
-// ─── GET PERCENTAGE BASED RATIO ─────────────────────────────────────────────────
-//
-
-    float get_percentage_based_ration ( float input ) {
-        return abs( cos( sin( input ) * display_number ) );
-    }
 
 //
 // ─── COMPUTE SCAN LINE LIGHTS ───────────────────────────────────────────────────
@@ -457,13 +462,7 @@
 //
 
     void update_display_number ( ) {
-        if ( display_number < 100 ) {
-            display_number += 1;
-        } else if ( display_number < 1000 ) {
-            display_number += 20;
-        } else {
-            display_number += 50;
-        }
+        display_number += 0.04;
     }
 
 //
@@ -499,7 +498,7 @@
            glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB );
             glutInitWindowSize( screen_width, screen_height );
         glutInitWindowPosition( 100, 100);
-              glutCreateWindow( "✣ Pouya's Strange Fractal ✣" );
+              glutCreateWindow( "✣ Pouya's Shadow Shader ✣" );
                           init( );
                glutDisplayFunc( display );
                   glutIdleFunc( display );
